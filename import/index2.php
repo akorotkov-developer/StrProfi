@@ -13,7 +13,7 @@ $startTime = date("d.m.Y H:i:s");
 global $iblock, $productSections;
 $iblock = 1;
 global $host;
-$host = "http://strprofi.ru/";
+$host = "https://strprofi.ru/";
 $url = $host."import/export/";
 $productSections = Array();
 $tempArray = Array();
@@ -205,7 +205,6 @@ foreach($tempArray as $i=>$a)
 die;*/
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 
 	
 e($i.' items loaded from catalog.txt lines: good='.$good.' bad='.$bad);
@@ -527,6 +526,7 @@ function addUpdateElement($item, $siteCatID)
 		
 		$el->Update($ob["ID"], $arUpdate);
 		CIBlockElement::SetPropertyValuesEx($ob["ID"], $iblock, $propsToUpdate);
+
 		$ID = $ob["ID"];
 	}
 	else

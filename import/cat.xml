@@ -67,154 +67,147 @@
 <PorNomer>108</PorNomer>
 <ID>3789</ID>
 <sID>20024</sID>
-<name> 9 Саморез универсальный желтый цинк</name>
+<name> 8 Саморез универсальный желтый цинк</name>
 <desc>Универсальные шурупы по дереву, ДСП , ДВП. [BR][BR]Потайная головка, крестообразный шлиц  POZI,[BR][BR]острый наконечник, крупная резьба,[BR][BR]желтопассивированные.</desc>
 </category>
 <category>
 <PorNomer>109</PorNomer>
 <ID>3536</ID>
 <sID>19892</sID>
-<name>10 Саморез универсальный белый цинк</name>
+<name> 9 Саморез универсальный белый цинк</name>
 <desc>Универсальные шурупы по дереву, ДСП , ДВП. [BR][BR]Потайная головка, крестообразный шлиц  POZI,[BR][BR]острый наконечник, крупная резьба,[BR][BR]белый цинк.</desc>
 </category>
 <category>
 <PorNomer>110</PorNomer>
 <ID>18752</ID>
 <sID>43588</sID>
-<name>11 Саморез din 7976 ш/г острый оц.</name>
+<name>10 Саморез din 7976 ш/г острый оц.</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>111</PorNomer>
 <ID>7046</ID>
 <sID>39480</sID>
-<name>12 Саморез din 7981 п/сф острый оц.</name>
+<name>11 Саморез din 7981 п/сф острый оц.</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>112</PorNomer>
 <ID>23057</ID>
 <sID>48031</sID>
-<name>13 Саморез din 7982 потай оц.</name>
+<name>12 Саморез din 7982 потай оц.</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>113</PorNomer>
 <ID>18900</ID>
 <sID>43848</sID>
-<name>14 Саморез кровельный ш/г din 7405K со сверлом без шайбы оц.</name>
+<name>13 Саморез кровельный ш/г din 7405K со сверлом без шайбы оц.</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>114</PorNomer>
 <ID>22983</ID>
 <sID>47958</sID>
-<name>15 Саморез по металлу для соединения металлических конструкций с антикоррозийным покрытием</name>
+<name>14 Саморез по металлу для соединения металлических конструкций с антикоррозийным покрытием</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>115</PorNomer>
 <ID>227</ID>
 <sID>13858</sID>
-<name>16 Саморез кровельный ш/г со сверлом оц.</name>
+<name>15 Саморез кровельный ш/г со сверлом оц.</name>
 <desc>Кровельные саморезы для монтажа металлочерепицы и [BR][BR]профнастила к деревянным, а также к металлическим [BR][BR]конструкциям.</desc>
 </category>
 <category>
 <PorNomer>116</PorNomer>
-<ID>18965</ID>
-<sID>43917</sID>
-<name>17 Шайба с зонтичным EPDM, для крепления поликарбоната</name>
-<desc></desc>
-</category>
-<category>
-<PorNomer>117</PorNomer>
 <ID>3307</ID>
 <sID>19637</sID>
-<name>18 Саморез кровельный ш/г со сверлом цвета по RAL</name>
+<name>16 Саморез кровельный ш/г со сверлом цвета по RAL</name>
 <desc>Кровельные саморезы для монтажа металлочерепицы и [BR][BR]профнастила к деревянным, а также к металлическим [BR][BR]конструкциям окрашеные в цвета RAL.</desc>
 </category>
 <category>
-<PorNomer>118</PorNomer>
+<PorNomer>117</PorNomer>
 <ID>7579</ID>
 <sID>39573</sID>
-<name>19 Саморез кровельный с увеличенным сверлом PT-5 15мм, гарантированное сверление металла до 12мм!</name>
+<name>17 Саморез кровельный с увеличенным сверлом PT-5 15мм, гарантированное сверление металла до 12мм!</name>
 <desc>Саморезы с EPDM шайбой для крепления профилированных [BR][BR]листов к металлоконструкциям до 12,5 мм.</desc>
 </category>
 <category>
-<PorNomer>119</PorNomer>
+<PorNomer>118</PorNomer>
 <ID>15646</ID>
 <sID>35980</sID>
-<name>20 Пластиковый колпачек для кровельных саморезов</name>
+<name>18 Пластиковый колпачек для кровельных саморезов</name>
+<desc></desc>
+</category>
+<category>
+<PorNomer>119</PorNomer>
+<ID>20032</ID>
+<sID>45020</sID>
+<name>19 Шйбы для сотового поликарбоната</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>120</PorNomer>
-<ID>20032</ID>
-<sID>45020</sID>
-<name>21 Термошайба для сотового поликарбоната</name>
-<desc></desc>
-</category>
-<category>
-<PorNomer>121</PorNomer>
 <ID>7103</ID>
 <sID>39496</sID>
-<name>22 Саморез для сэндвич панелей</name>
+<name>20 Саморез для сэндвич панелей</name>
 <desc>Саморез для сэндвич-панелей используется при [BR][BR]необходимости прямого монтажа сэндвич-панели [BR][BR]на конструкцию из стали.</desc>
 </category>
 <category>
-<PorNomer>122</PorNomer>
+<PorNomer>121</PorNomer>
 <ID>15797</ID>
 <sID>36622</sID>
-<name>23 Шуруп для крепления деревянных лаг и реек DIN 571</name>
+<name>21 Шуруп для крепления деревянных лаг и реек DIN 571</name>
 <desc>Шуруп для крепления деревянных лаг и реек. Шестигранная головка, [BR][BR]крупная резьба, острый наконечник, оцинкованный.</desc>
 </category>
 <category>
-<PorNomer>123</PorNomer>
+<PorNomer>122</PorNomer>
 <ID>17298</ID>
 <sID>39458</sID>
-<name>24 Саморез оконный острый WS-SP головка потай крест ph2 белый цинк</name>
+<name>22 Саморез оконный острый WS-SP головка потай крест ph2 белый цинк</name>
 <desc>Саморезы оконные, лазерная калибровка,[BR][BR]для автоматической и ручной сборки,[BR][BR]желтый/ белый цинк</desc>
 </category>
 <category>
-<PorNomer>124</PorNomer>
+<PorNomer>123</PorNomer>
 <ID>2356</ID>
 <sID>41559</sID>
-<name>25 Саморез оконный с буром WS-SD головка потай крест ph2 белый цинк</name>
+<name>23 Саморез оконный с буром WS-SD головка потай крест ph2 белый цинк</name>
 <desc>Саморезы оконные с насечками на конусной части головки,[BR][BR]лазерная калибровка,[BR][BR]для автоматической и ручной сборки,[BR][BR]желтый/ белый цинк</desc>
 </category>
 <category>
-<PorNomer>125</PorNomer>
+<PorNomer>124</PorNomer>
 <ID>18765</ID>
 <sID>43717</sID>
-<name>26 Шуруп оконный с полусферической головкой белый цинк</name>
+<name>24 Шуруп оконный с полусферической головкой белый цинк</name>
 <desc></desc>
 </category>
 <category>
-<PorNomer>126</PorNomer>
+<PorNomer>125</PorNomer>
 <ID>4380</ID>
 <sID>20777</sID>
-<name>27 Шуруп по бетону (нагель)</name>
+<name>25 Шуруп по бетону (нагель)</name>
 <desc>Потайная головка с насечками для раззенковки, [BR][BR]шлиц Torx № 30, двухзаходная резьба с поперечным [BR][BR]сечением острый наконечник, желтопассивированный.</desc>
 </category>
 <category>
-<PorNomer>127</PorNomer>
+<PorNomer>126</PorNomer>
 <ID>15820</ID>
 <sID>42592</sID>
-<name>28 Шуруп костыль</name>
+<name>26 Шуруп костыль</name>
 <desc>Шуруп костыль</desc>
 </category>
 <category>
-<PorNomer>128</PorNomer>
+<PorNomer>127</PorNomer>
 <ID>18287</ID>
 <sID>42515</sID>
-<name>29 Шуруп кольцо, полукольцо</name>
+<name>27 Шуруп кольцо, полукольцо</name>
 <desc>Шуруп полукольцо.</desc>
 </category>
 <category>
-<PorNomer>129</PorNomer>
+<PorNomer>128</PorNomer>
 <ID>13020</ID>
 <sID>20181</sID>
-<name>30 Шуруп-шпилька</name>
+<name>28 Шуруп-шпилька</name>
 <desc>Шуруп шпилька</desc>
 </category>
 </childs>
@@ -1152,7 +1145,7 @@
 <PorNomer>113</PorNomer>
 <ID>19758</ID>
 <sID>44747</sID>
-<name>14 Эксцентрики</name>
+<name>14 Стяжка эксцентриковая</name>
 <desc></desc>
 </category>
 <category>
@@ -1189,89 +1182,80 @@
 <childs>
 <category>
 <PorNomer>101</PorNomer>
-<ID>905</ID>
-<sID>44903</sID>
-<name>Гибкие связи с песчаным покрытием</name>
-<desc></desc>
-</category>
-<category>
-<PorNomer>102</PorNomer>
-<ID>18800</ID>
-<sID>43751</sID>
-<name>Фиксатор ТИЗ для гибких связей</name>
-<desc></desc>
-</category>
-<category>
-<PorNomer>103</PorNomer>
-<ID>4153</ID>
-<sID>20404</sID>
-<name>Фиксаторы арматуры</name>
-<desc></desc>
-<childs>
-<category>
-<PorNomer>101</PorNomer>
 <ID>19076</ID>
 <sID>44028</sID>
-<name>1 Фиксатор арматуры "Стойка"</name>
+<name> 1 Фиксатор арматуры "Стойка"</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>102</PorNomer>
 <ID>19075</ID>
 <sID>44027</sID>
-<name>2 Фиксатор арматуры стульчик</name>
+<name> 2 Фиксатор арматуры стульчик</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>103</PorNomer>
 <ID>19077</ID>
 <sID>44029</sID>
-<name>3 Фиксатор арматуры "потолочная опора"</name>
+<name> 3 Фиксатор арматуры "потолочная опора"</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>104</PorNomer>
 <ID>19078</ID>
 <sID>44030</sID>
-<name>4 Фиксатор арматуры "Звездочка"</name>
+<name> 4 Фиксатор арматуры "Звездочка"</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>105</PorNomer>
 <ID>21607</ID>
 <sID>46593</sID>
-<name>5 Опора для сыпучих грунтов</name>
+<name> 5 Опора для сыпучих грунтов</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>106</PorNomer>
 <ID>22299</ID>
 <sID>47276</sID>
-<name>6 Конус 22, для сборки опалубки</name>
+<name> 6 Конус 22, для сборки опалубки</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>107</PorNomer>
 <ID>22300</ID>
 <sID>47277</sID>
-<name>7 Клипса,соединитель арматуры</name>
+<name> 7 Клипса,соединитель арматуры</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>108</PorNomer>
 <ID>22301</ID>
 <sID>47278</sID>
-<name>8 Защитный колпачек для арматуры</name>
+<name> 8 Защитный колпачек для арматуры</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>109</PorNomer>
 <ID>22985</ID>
 <sID>47960</sID>
-<name>9 Стяжной винт для опалубки</name>
+<name> 9 Стяжной винт для опалубки</name>
 <desc></desc>
 </category>
-</childs>
+<category>
+<PorNomer>110</PorNomer>
+<ID>905</ID>
+<sID>44903</sID>
+<name>10 Гибкие связи с песчаным покрытием</name>
+<desc></desc>
+</category>
+<category>
+<PorNomer>111</PorNomer>
+<ID>18800</ID>
+<sID>43751</sID>
+<name>11 Фиксатор ТИЗ для гибких связей</name>
+<desc></desc>
 </category>
 </childs>
 </category>
@@ -2124,21 +2108,21 @@
 <PorNomer>729</PorNomer>
 <ID>3069</ID>
 <sID>19392</sID>
-<name>29 Саморез арт. 9998 прессшайба сверло нержавеющая сталь А2</name>
+<name>29 Саморез арт.9998 прессшайба сверло нерж.сталь А2</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>730</PorNomer>
 <ID>18748</ID>
 <sID>43584</sID>
-<name>30 Саморез арт. 9999 прессшайба острая нержавеющая сталь А2</name>
+<name>30 Саморез арт.9999 прессшайба острая нерж.сталь А2</name>
 <desc></desc>
 </category>
 <category>
 <PorNomer>731</PorNomer>
 <ID>18084</ID>
 <sID>41799</sID>
-<name>31 Саморез арт 9050 потай/гл крест/шл для ДСП нержавеющая сталь А2</name>
+<name>31 Саморез арт.9050 потай/гл pz шлиц неполная резьба для ДСП нерж.сталь А2</name>
 <desc></desc>
 </category>
 <category>
@@ -2166,7 +2150,7 @@
 <PorNomer>735</PorNomer>
 <ID>19949</ID>
 <sID>44938</sID>
-<name>35 Клиновой анкер ART 9370</name>
+<name>35 Клиновой анкер арт.9370</name>
 <desc></desc>
 </category>
 </childs>
