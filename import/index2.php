@@ -13,7 +13,16 @@ $startTime = date("d.m.Y H:i:s");
 global $iblock, $productSections;
 $iblock = 1;
 global $host;
-$host = "https://strprofi.ru/";
+
+/**Новый метод определения хоста*/
+if ($_SERVER['SERVER_PORT'] == '443') {
+    $sHttp = 'https://';
+} else {
+    $sHttp = 'http://';
+}
+$host = $sHttp . $_SERVER['SERVER_NAME'] . '/';
+/************************************/
+
 $url = $host."import/export/";
 $productSections = Array();
 $tempArray = Array();
@@ -90,12 +99,13 @@ e("Импорт начат ".date("d.m.Y H:i:s"));
 	}
 	else
 	{
+	    $iTempLineCount = 0;
 		foreach($lines as $line)
 		{
 				$line = iconv("windows-1251","utf-8",$line);
 				$a = explode(';',$line);
 				//старый бесполезный механизм для 21 столбца
-				if(false) //-выключен
+				if(false) //-выключенф
 				if(count($a)>=21)
 				{
 					echo ('total size: '.count($a));
@@ -131,30 +141,50 @@ e("Импорт начат ".date("d.m.Y H:i:s"));
 					
 
 				}
-				
+
+            $iTempLineCount++;
+
 				//новый механизм
 				if(count($a)==3)
 				{	
 					//некоторая фильтрация
-					if($a[1]!=19) $tempArray[$a[0]][$a[1]] = getLine($a[2]);					
-					else $tempArray[$a[0]][$a[1]] = getDesc($a[2]);		
-					$good++;					
+					if ($a[1]!=19) {
+                        $tempArray[$a[0]][$a[1]] = getLine($a[2]);
+                    } else {
+                        $tempArray[$a[0]][$a[1]] = getDesc($a[2]);
+                    }
+					$good++;
 				}
 				else 
 				{
+				    $acount = 0;
+				    foreach($a as $akey => $arRes) {
+				        if ($acount > 2){
+				            unset($a[$akey]);
+                        }
+
+                        $acount ++;
+                    }
+
+                    //некоторая фильтрация
+                    if ($a[1]!=19) {
+                        $tempArray[$a[0]][$a[1]] = getLine($a[2]);
+                    } else {
+                        $tempArray[$a[0]][$a[1]] = getDesc($a[2]);
+                    }
+                    $good++;
+
 					$badLines[$i] = $line;
 					$bad++;
 				}
 				$i++;
 		}
 	}
-
 }
 
 //приведение массивов
 foreach($tempArray as $i=>$a)
 {
-	
 	$items[$a[2]][$i]['ID'] = $a[1];
 	$items[$a[2]][$i]['NomNomer'] = $a[6];
 	$items[$a[2]][$i]['NomenklaturaGeog'] = '';
@@ -182,7 +212,6 @@ foreach($tempArray as $i=>$a)
 	if (strlen($items[$a[2]][$i]['desc'])<4) $items[$a[2]][$i]['desc'] = '';
 	
 }
-
 	
 //var_dump($tempArray);	
 
