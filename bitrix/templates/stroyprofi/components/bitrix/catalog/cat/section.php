@@ -30,7 +30,11 @@ if ($ar_result = $db_list->GetNext()) {
 	$component
 );?>
 <?
-$isTabs = (count($tabsID) > 0);
+if (count($tabsID) > 0 && $tabsID !== false) {
+    $isTabs = true;
+} else {
+    $isTabs = false;
+}
 if ($isTabs) {
 //    print_r($tabsID);
 	$arSelect = Array("ID", "CODE", "PROPERTY_TITLE", "PREVIEW_TEXT", "PROPERTY_PDF");
