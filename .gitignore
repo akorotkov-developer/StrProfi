@@ -1,3 +1,4 @@
 /bitrix/*
 /.idea
 !/bitrix/templates/
+!/bitrix/components/
