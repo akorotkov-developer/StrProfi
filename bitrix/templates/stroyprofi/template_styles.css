@@ -198,7 +198,7 @@ hr.dashed{
 
 
 .search-submit{
-    height: 24px;
+    height: 23px;
     width: 26px;
     background: url('/img/search_submit.png') left top no-repeat;
     border: none;
@@ -207,6 +207,7 @@ hr.dashed{
     margin-left: 5px;
     line-height: 20px;
     cursor: pointer;
+    margin-bottom: -7px;
 }
 
 

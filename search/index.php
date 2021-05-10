@@ -9,10 +9,6 @@ CModule::IncludeModule("iblock");
 		<?
 		$where = ($_GET['where'] == "articul")?"articul":"name";
 		?>
-        <div class="search-where-page">
-            <label for="where-name-page" class="search-where"><input type="radio" value="name" name="where" id="where-name-page" <?if($where=="name"){?> checked="checked"<?}?>> По имени</label>
-            <label for="where-articul-page" class="search-where"><input type="radio" value="articul" name="where" id="where-articul-page"<?if($where=="articul"){?> checked="checked"<?}?>> По артикулу</label>
-        </div>
         <div class="clear"></div>
     </form>
     <br>
@@ -62,11 +58,11 @@ CModule::IncludeModule("iblock");
 		}
 		$arSelect = Array("ID", "NAME", "IBLOCK_SECTION_ID", "PREVIEW_PICTURE", "PROPERTY_PRICE_OPT", "PROPERTY_PRICE");
 		$arFilter = Array("IBLOCK_ID" => 1, "ACTIVE" => "Y");
-		if ($where == "articul") {
-			$arFilter['PROPERTY_ARTICUL'] = str_replace("%", "", $q);
-		} else {
-			$arFilter['NAME'] = $q;
-		}
+        $arFilter = [
+            'LOGIC' => 'OR',
+            'PROPERTY_ARTICUL' => str_replace("%", "", $q),
+            'NAME' => $q
+        ];
 		$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>250), $arSelect);
 		$arElements = Array();
 		$sections = Array();
