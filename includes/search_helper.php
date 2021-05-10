@@ -56,11 +56,13 @@ if (mb_strlen($q) >= 1) {
 	}
 	$arSelect = Array("ID", "NAME", "IBLOCK_SECTION_ID", "PREVIEW_PICTURE", "PROPERTY_PRICE_OPT", "PROPERTY_PRICE");
 	$arFilter = Array("IBLOCK_ID" => 1, "ACTIVE" => "Y");
-	if ($where == "articul") {
-		$arFilter['PROPERTY_ARTICUL'] = str_replace("%", "", $q);
-	} else {
-		$arFilter['NAME'] = $q;
-	}
+
+    $arFilter = [
+        'LOGIC' => 'OR',
+        'PROPERTY_ARTICUL' => str_replace("%", "", $q),
+        'NAME' => $q
+    ];
+
 	$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize" => 5), $arSelect);
 	$itemsSelected = $res->SelectedRowsCount();
 	$arElements = Array();

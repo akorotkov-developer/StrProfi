@@ -98,10 +98,6 @@
 							<?
 							$where = ($_GET['where'] == "articul")?"articul":"name";
 							?>
-                            <div class="search-where-block">
-                                <label for="where-name" class="search-where"><input type="radio" value="name" name="where" id="where-name" <?if($where=="name"){?> checked="checked"<?}?>> По имени</label>
-                                <label for="where-articul" class="search-where"><input type="radio" value="articul" name="where" id="where-articul"<?if($where=="articul"){?> checked="checked"<?}?>> По артикулу</label>
-                            </div>
                             <a href="#" class="search_close">&times;</a>
                             <div class="search_results"></div>
                         </form>
