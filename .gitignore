@@ -2,3 +2,4 @@
 /.idea
 !/bitrix/templates/
 !/bitrix/components/
+!/bitrix/php_interface/
