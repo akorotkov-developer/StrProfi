@@ -205,12 +205,13 @@ if ($_GET["order"] == "ok") {
 				if ($_POST["comment"]) $text .= "<br/>Комментарий к заказу:<br/>" . $_POST["comment"]. "";
 
 				//добавляем элемент
-				file_put_contents("file.xml", $XML);
+				file_put_contents("Исходящие счета.xml", $XML);
+
 				$el = new CIBlockElement;
 				$PROP = array(
-					21 => CFile::MakeFileArray("http://strprofi.ru/cart/file.xml")
+					21 => CFile::MakeFileArray("https://strprofi.ru/cart/Исходящие счета.xml")
 				);
-				unlink("file.xml");
+
 				$arLoadProductArray = Array(
 					"IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
 					"IBLOCK_ID"      => 6,
@@ -236,9 +237,13 @@ if ($_GET["order"] == "ok") {
 				$text .= "Телефон: " . $_POST["phone"];
 				if ($_POST["comment"]) $text .= "<br/>Комментарий к заказу:<br/>" . $_POST["comment"]. "";
 				$text .= "<p style='padding:5px;background: #FFE5D4;color:#000;margin-bottom:10px;'>В ближайшее время мы свяжемся с Вами. Если у вас остались какие-то вопросы, то свяжитесь с нами по телефону <strong>(4852) 58-04-45</strong></p>";
+
 				pismo($_POST["email"], "Заказ № ".$orderID." от ".date("d.m.Y"), $text);
-				pismo("mail@strprofi.ru", "Заказ № ".$orderID." от ".date("d.m.Y"), $text);
-				pismo("strprofi@yandex.ru", "Заказ № ".$orderID." от ".date("d.m.Y"), $text);			
+				pismo("mail@strprofi.ru", "Заказ № ".$orderID." от ".date("d.m.Y"), $text, $from = "mail@strprofi.ru", $ReplyTo = "", $fromName = "", $_SERVER['DOCUMENT_ROOT'] . '/cart/Исходящие счета.xml');
+				pismo("strprofi@yandex.ru", "Заказ № ".$orderID." от ".date("d.m.Y"), $text, $from = "mail@strprofi.ru", $ReplyTo = "", $fromName = "", $_SERVER['DOCUMENT_ROOT'] . '/cart/Исходящие счета.xml');
+
+                unlink("Исходящие счета.xml");
+
 				setcookie("cart", "", time() - 10, "/");
 
 				$f = fopen("lastOrder.txt", "w");

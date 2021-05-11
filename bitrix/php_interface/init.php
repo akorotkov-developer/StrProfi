@@ -1,4 +1,12 @@
 <?php
+/**Подключение PHP mailer*/
+require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/php_interface/phpmailer/Exception.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/php_interface/phpmailer/PHPMailer.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/php_interface/phpmailer/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+/**************************/
 
 function deleteDir($path)
 {
@@ -161,32 +169,23 @@ function pismo($email, $subject, $text, $from = "mail@strprofi.ru", $ReplyTo = "
 <td>+7 (4852) 58-04-45<br/>+7 (4852) 58-04-46</td>
 </tr></table>";
 
-    if ($file) {
-        $content = chunk_split(base64_encode($file));
-        $uid = md5(uniqid(time()));
-        $header = "From: " . $fromName . " <$from>" . "\r\n";
-        $header .= "Reply-To: " . $ReplyTo . "\r\n";
-        $header .= "MIME-Version: 1.0\r\n";
-        $header .= "Content-Type: multipart/mixed; boundary=\"" . $uid . "\"\r\n\r\n";
-        $header .= "This is a multi-part message in MIME format.\r\n";
-        $header .= "--" . $uid . "\r\n";
-        $header .= "Content-type: text/html; charset=utf-8" . "\r\n";
-        $header .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-        $header .= $text . "\r\n\r\n";
-        $header .= "--" . $uid . "\r\n";
-        $header .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"\r\n"; // use different content types here
-        $header .= "Content-Transfer-Encoding: base64\r\n";
-        $header .= "Content-Disposition: attachment; filename=\"" . $filename . "\"\r\n\r\n";
-        $header .= $content . "\r\n\r\n";
-        $header .= "--" . $uid . "--";
-        mail($email, $subject, "", $header);
-    } else {
-        $header = "MIME-Version: 1.0" . "\n";
-        $header .= "Content-type: text/html; charset=utf-8" . "\n";
-        $header .= "From: " . $fromName . " <$from>" . "\n";
-        $header .= "Reply-To: " . $ReplyTo . "\n";
-        $header .= "Return-Path: $from" . "\n";
-        mail($email, $subject, $text, $header);
+    $mail = new PHPMailer;
+    try {
+        $mail->AddCustomHeader ('Content-type: text/html; charset=utf-8"');
+        $mail->CharSet = 'UTF-8';
+        $mail->IsHTML(true);
+        $mail->setFrom($from, $fromName);
+        $mail->addAddress($email);
+        $mail->Subject =  $subject;
+        $mail->msgHTML($text);
+
+        if ($file) {
+            $mail->addAttachment($file);
+        }
+
+        $mail->send();
+    } catch (Exception $e) {
+        echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
     }
 }
 
