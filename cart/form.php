@@ -223,7 +223,6 @@ if ($_GET["order"] == "ok") {
 				);
 				$el->Add($arLoadProductArray);
 
-
 				// pismo("mail@strprofi.ru, strprofi@yandex.ru", "Новый заказ. № ".$orderID." от ".date("d.m.Y"), $text, "mail@strprofi.ru", "", "", $XML, "Исходящие счета.xml");
 
 				$text = "";
@@ -239,7 +238,6 @@ if ($_GET["order"] == "ok") {
 				$text .= "<p style='padding:5px;background: #FFE5D4;color:#000;margin-bottom:10px;'>В ближайшее время мы свяжемся с Вами. Если у вас остались какие-то вопросы, то свяжитесь с нами по телефону <strong>(4852) 58-04-45</strong></p>";
 				pismo($_POST["email"], "Заказ № ".$orderID." от ".date("d.m.Y"), $text);
 				pismo("mail@strprofi.ru", "Заказ № ".$orderID." от ".date("d.m.Y"), $text);
-				pismo("xtrqwe@mail.ru", "Заказ № ".$orderID." от ".date("d.m.Y"), $text);
 				pismo("strprofi@yandex.ru", "Заказ № ".$orderID." от ".date("d.m.Y"), $text);			
 				setcookie("cart", "", time() - 10, "/");
 
