@@ -171,7 +171,6 @@ function pismo($email, $subject, $text, $from = "mail@strprofi.ru", $ReplyTo = "
 
     $mail = new PHPMailer;
     try {
-        $mail->AddCustomHeader ('Content-type: text/html; charset=utf-8"');
         $mail->CharSet = 'UTF-8';
         $mail->IsHTML(true);
         $mail->setFrom($from, $fromName);
