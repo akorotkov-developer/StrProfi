@@ -685,7 +685,7 @@ if (file_exists('tmp/cats2.xml')) {
 if (!$xml)
 {
     //msg('файл отсутствует или пустой - генерируем');
-    $xml = file_get_contents("http://strprofi.ru/import/export/cats2.php?SITE_ID=585");
+    $xml = file_get_contents("https://strprofi.ru/import/export/cats2.php?SITE_ID=585");
     //msg($xml);
     $file = fopen("tmp/cats2.xml", "w+");
     fputs($file, (string)$xml);
@@ -766,7 +766,7 @@ foreach ($sections as $section) {
         if (!$loadXML)
         {
             //msg('файл отсутствует или пустой - генерируем');
-            $loadXML = file_get_contents('http://strprofi.ru/import/export/items2.php?cat=' . $section['ID'] . '&SITE_ID=585');
+            $loadXML = file_get_contents('https://strprofi.ru/import/export/items2.php?cat=' . $section['ID'] . '&SITE_ID=585');
             //msg($xml);
             $file = fopen('tmp/section-'.$section['ID'].'.xml', "w+");
             fputs($file, (string)$loadXML);

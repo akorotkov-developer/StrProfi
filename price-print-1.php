@@ -551,7 +551,7 @@ class getArrayFromXML
 
 
 
-$xml = simplexml_load_file("http://strprofi.ru/import/export/cats2.php?SITE_ID=585");
+$xml = simplexml_load_file("https://strprofi.ru/import/export/cats2.php?SITE_ID=585");
 
 
 
@@ -612,7 +612,7 @@ foreach ($sections as $section) {
         $res = CIBlockElement::GetList(Array('NAME' => 'ASC'), $arFilter, false, false, $arSelect);
         */
 
-        $loadXML = simplexml_load_file('http://strprofi.ru/import/export/items2.php?cat=' . $section['ID']);
+        $loadXML = simplexml_load_file('https://strprofi.ru/import/export/items2.php?cat=' . $section['ID']);
         $elementsArray = $xmlToArray->getElementsArray($loadXML);
 
         //msg((array)$loadXML);
