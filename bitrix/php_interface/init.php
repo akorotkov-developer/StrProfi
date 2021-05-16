@@ -1,4 +1,6 @@
 <?php
+CJSCore::Init(array("jquery"));
+
 /**Подключение PHP mailer*/
 require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/php_interface/phpmailer/Exception.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/php_interface/phpmailer/PHPMailer.php';
