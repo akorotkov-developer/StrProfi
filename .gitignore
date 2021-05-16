@@ -1,5 +1,7 @@
 /bitrix/*
 /.idea
 !/bitrix/templates/
-!/bitrix/components/
+!/bitrix/components/profi/
+!/bitrix/components/prominado/
 !/bitrix/php_interface/
+!/bitrix/gadgets/
