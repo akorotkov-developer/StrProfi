@@ -61,7 +61,7 @@
             $('.clear').html('Очистить кэш').removeAttr('disabled');
         })
     });
-    if (UrlExists('http://strprofi.ru/tmp/cats2.xml')) {
+    if (UrlExists('https://strprofi.ru/tmp/cats2.xml')) {
         $('.generate').hide();
         $('.download').show()
     }

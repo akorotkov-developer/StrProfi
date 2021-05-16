@@ -792,7 +792,7 @@ class pricePrint
                     $loadXML = simplexml_load_file('tmp/section-' . $section['ID'] . '.xml');
                 }
                 if (!$loadXML) {
-                    $loadXML = file_get_contents('http://strprofi.ru/import/export/items2.php?cat=' . $section['ID'] . '&SITE_ID=585');
+                    $loadXML = file_get_contents('https://strprofi.ru/import/export/items2.php?cat=' . $section['ID'] . '&SITE_ID=585');
                     $file = fopen('tmp/section-' . $section['ID'] . '.xml', "w+");
                     fputs($file, (string)$loadXML);
                     fclose($file);
@@ -802,7 +802,7 @@ class pricePrint
             }
         } else {
             foreach ($sections as $section) {
-                $loadXML = simplexml_load_file('http://strprofi.ru/import/export/items2.php?cat=' . $section['ID'] . '&SITE_ID=585');
+                $loadXML = simplexml_load_file('https://strprofi.ru/import/export/items2.php?cat=' . $section['ID'] . '&SITE_ID=585');
                 $elementsXMLObjects[$section['ID']] = $loadXML;
             }
         }
@@ -903,14 +903,14 @@ class pricePrint
     private function setSectionsXMLObject()
     {
         if (!$this->settings['cache']) {
-            $xml = simplexml_load_file('http://strprofi.ru/import/export/cats2.php?SITE_ID=585');
+            $xml = simplexml_load_file('https://strprofi.ru/import/export/cats2.php?SITE_ID=585');
         } else {
             $xml = '';
             if (file_exists('tmp/cats2.xml')) {
                 $xml = simplexml_load_file("tmp/cats2.xml");
             }
             if (!$xml) {
-                $xml = file_get_contents("http://strprofi.ru/import/export/cats2.php?SITE_ID=585");
+                $xml = file_get_contents("https://strprofi.ru/import/export/cats2.php?SITE_ID=585");
                 $file = fopen("tmp/cats2.xml", "w+");
                 fputs($file, (string)$xml);
                 fclose($file);
@@ -1019,7 +1019,7 @@ $firstList = '<div id="first-list">
     <title>Прайс-лист</title>
     <!--<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono&subset=latin,cyrillic' rel='stylesheet'
           type='text/css'>-->
-    <link href='http://fonts.googleapis.com/css?family=PT+Mono&subset=latin,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=PT+Mono&subset=latin,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
     <? require_once 'pricePrintCss.php'; ?>
 </head>
 <body>
