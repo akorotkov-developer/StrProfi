@@ -1,0 +1,12 @@
+{
+    "name": "strprofi/akorotkov",
+    "description": "Strprofi composer file",
+    "authors": [
+        {
+            "name": "Akorotokov"
+        }
+    ],
+    "require": {
+        "dompdf/dompdf": "1.0.2"
+    }
+}

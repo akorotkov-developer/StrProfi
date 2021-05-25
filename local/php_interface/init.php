@@ -1,10 +1,12 @@
 <?php
+require(__DIR__ . "/../include/vendor/autoload.php");
+
 CJSCore::Init(array("jquery"));
 
 /**Подключение PHP mailer*/
-require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/php_interface/phpmailer/Exception.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/php_interface/phpmailer/PHPMailer.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/php_interface/phpmailer/SMTP.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/local/php_interface/phpmailer/Exception.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/local/php_interface/phpmailer/PHPMailer.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/local/php_interface/phpmailer/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
