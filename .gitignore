@@ -5,3 +5,4 @@
 !/bitrix/components/prominado/
 !/bitrix/php_interface/
 !/bitrix/gadgets/
+local/include/vendor/*

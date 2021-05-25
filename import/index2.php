@@ -205,6 +205,7 @@ foreach($tempArray as $i=>$a)
 	$items[$a[2]][$i]['CZena2'] = $a[10];
 	$items[$a[2]][$i]['CZena3'] = $a[11];
 	$items[$a[2]][$i]['EdIzmereniya'] = $a[7];
+    $items[$a[2]][$i]['show_in_price'] = $a[17];
 	$items[$a[2]][$i]['desc'] = str_replace('<br>',"\n",str_replace('<br><br>',"\n",$a[19]));
 
 	//Если забыли заполнить свёртку - пусть там будет наименование
@@ -464,7 +465,8 @@ function addUpdateElement($item, $siteCatID)
 			"OSTATOK" => $item['Ostatok'],
 			"NAIMENOVANIE" => $item['Naimenovanie'],
 			"NomenklaturaGeog" => $item['NomenklaturaGeog'],
-			"V_REZERVE" => $item['VRezerve']
+			"V_REZERVE" => $item['VRezerve'],
+            "SHOW_IN_PRICE" => ($item['show_in_price'] > 0) ? 1: 0
 		);
 		$arUpdate = Array(
 			"NAME" => trim(strval($item['Svertka'])),
@@ -584,7 +586,8 @@ function addUpdateElement($item, $siteCatID)
 				"NomenklaturaGeog" => $item['NomenklaturaGeog'],
 				"UPAKOVKA2" => $item['VUpakovke2'],
 				"OSTATOK" => $item['Ostatok'],
-				"V_REZERVE" => $item['VRezerve']
+				"V_REZERVE" => $item['VRezerve'],
+                "SHOW_IN_PRICE" => ($item['show_in_price'] > 0) ? 1: 0
 			),
 		);
 
