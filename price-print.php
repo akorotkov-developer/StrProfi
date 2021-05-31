@@ -34,6 +34,7 @@ function compare($x, $y)
 
 class pricePrint
 {
+    private $itemsForXml;
 
     public function getSectionsByIdArray()
     {
@@ -432,7 +433,7 @@ class pricePrint
                     $rowHeight = 22.5;
                 }*/
                 //if ($plusHeight == true)
-                    $this->heightCounterPlus($rowHeight);
+                $this->heightCounterPlus($rowHeight);
 
 
             }
@@ -783,29 +784,18 @@ class pricePrint
 
     private function setElementsXMlObjects()
     {
+        //Создадим все фалики xml с товрами
+        $this->getItemsForXml();
+
         $elementsXMLObjects = array();
         $sections = $this->getSectionsArray();
-        if ($this->settings['cache'] == true) {
-            foreach ($sections as $section) {
-                $loadXML = '';
-                if (file_exists('tmp/section-' . $section['ID'] . '.xml')) {
-                    $loadXML = simplexml_load_file('tmp/section-' . $section['ID'] . '.xml');
-                }
-                if (!$loadXML) {
-                    $loadXML = file_get_contents('https://strprofi.ru/import/export/items2.php?cat=' . $section['ID'] . '&SITE_ID=585');
-                    $file = fopen('tmp/section-' . $section['ID'] . '.xml', "w+");
-                    fputs($file, (string)$loadXML);
-                    fclose($file);
-                    $loadXML = simplexml_load_file('tmp/section-' . $section['ID'] . '.xml');
-                }
-                $elementsXMLObjects[$section['ID']] = $loadXML;
-            }
-        } else {
-            foreach ($sections as $section) {
-                $loadXML = simplexml_load_file('https://strprofi.ru/import/export/items2.php?cat=' . $section['ID'] . '&SITE_ID=585');
-                $elementsXMLObjects[$section['ID']] = $loadXML;
-            }
+
+        foreach ($sections as $section) {
+            $loadXML = simplexml_load_file('tmp/section-' . $section['ID'] . '.xml');
+
+            $elementsXMLObjects[$section['ID']] = $loadXML;
         }
+
         $this->elementsXMLObjects = $elementsXMLObjects;
     }
 
@@ -902,29 +892,136 @@ class pricePrint
 
     private function setSectionsXMLObject()
     {
-        if (!$this->settings['cache']) {
-            $xml = simplexml_load_file('https://strprofi.ru/import/export/cats2.php?SITE_ID=585');
-        } else {
-            $xml = '';
-            if (file_exists('tmp/cats2.xml')) {
-                $xml = simplexml_load_file("tmp/cats2.xml");
-            }
-            if (!$xml) {
-                $xml = file_get_contents("https://strprofi.ru/import/export/cats2.php?SITE_ID=585");
-                $file = fopen("tmp/cats2.xml", "w+");
-                fputs($file, (string)$xml);
-                fclose($file);
-                $xml = simplexml_load_file("tmp/cats2.xml");
-            }
-        }
-        $this->sectionsXMLObject = $xml;
+        $xml = simplexml_load_file("tmp/cats2.xml");
 
+        $this->sectionsXMLObject = $xml;
     }
 
 
     private function __construct($settings)
     {
         $this->settings = $settings;
+    }
+
+    private function getItemsForXml() {
+        CModule::IncludeModule("iblock");
+
+        $sections = $this->getSectionsArray();
+
+        $arRezultSections = array_column($sections, 'ID');
+
+        $arFilter = [
+            'ACTIVE' => 'Y',
+            'IBLOCK_ID' => 1,
+            'UF_ROWID' => $arRezultSections
+        ];
+        $arSelect = ['IBLOCK_ID', 'ID', 'NAME', 'DEPTH_LEVEL', 'IBLOCK_SECTION_ID', 'PICTURE', 'UF_ROWID'];
+        $arOrder = ['DEPTH_LEVEL' => 'ASC', 'SORT' => 'ASC'];
+        $rsSections = CIBlockSection::GetList($arOrder, $arFilter, false, $arSelect);
+
+        $arSectionIds = [];
+        while ($arSection = $rsSections->GetNext()) {
+            $arSectionIds[$arSection['UF_ROWID']] = $arSection['ID'];
+        }
+
+        //Сделаем выборку всех товаров полученных секциях
+        $arItems = [];
+
+        $arFilter = [
+            'IBLOCK_ID' => 1,
+            'PROPERTY_SHOW_IN_PRICE' => [1],
+            'SECTION_ID' => $arSectionIds,
+            /*'INCLUDE_SUBSECTIONS' => 'Y'*/
+        ];
+        $dbRes = CIBlockElement::GetList(
+            ['SORT"=>"ASC'],
+            $arFilter,
+            false,
+            false,
+            [
+                'ID',
+                'NAME',
+                'PROPERTY_NOMNOMER',
+                'PROPERTY_SHOW_IN_PRICE',
+                'IBLOCK_SECTION_ID',
+                'PREVIEW_PICTURE',
+                'PROPERTY_ARTICUL',
+                'PROPERTY_ROWID',
+                'PROPERTY_NOMNOMER',
+                'PROPERTY_NomenklaturaGeog',
+                'PROPERTY_VES',
+                'PROPERTY_UPAKOVKA',
+                'PROPERTY_UPAKOVKA2',
+                'PROPERTY_NAIMENOVANIE',
+                'PREVIEW_PICTURE',
+                'PROPERTY_PRICE',
+                'PRICE_OPT',
+                'PRICE_OPT2',
+                'PROPERTY_UNITS',
+                'IBLOCK_SECTION_ID'
+            ]
+        );
+        while($arRez = $dbRes->Fetch())
+        {
+            $arItems[] = $arRez;
+        }
+
+        //Теперь составим xml файлики из полученныех данных
+        //TODO искуственно ограничение на количество товаров
+        $sectArraya = [17304, 17304, 3566, 7532];
+        foreach ($arSectionIds as $keyRowId => $sectionItem) {
+            //TODO искуственно ограничение на количество товаров
+            if (!in_array($keyRowId, $sectArraya)) {
+                continue;
+            }
+
+            ob_start();
+
+            /*header('Content-Type: text/xml');*/
+            echo '<?xml version="1.0" encoding="utf-8"?> ';?>
+
+            <items>
+                <?php
+                foreach ($arItems as $item) {
+                    if (!$item['PROPERTY_ARTICUL_VALUE']) {
+                        continue;
+                    }
+
+                    if ($item['IBLOCK_SECTION_ID'] != $sectionItem) {
+                        continue;
+                    }
+                    ?>
+
+                    <item>
+                        <ID><?=$item['PROPERTY_ROWID_VALUE'];?></ID>
+                        <NomNomer><?=$item['PROPERTY_PROPERTY_NOMNOMER_VALUE'];?></NomNomer>
+                        <NomenklaturaGeog><?=$item['PROPERTY_NomenklaturaGeog_VALUE'];?></NomenklaturaGeog>
+                        <Ves><?=$item['PROPERTY_VES_VALUE'];?></Ves>
+                        <VUpakovke><?=$item['PROPERTY_UPAKOVKA_VALUE'];?></VUpakovke>
+                        <VUpakovke2><?=$item['PROPERTY_UPAKOVKA_VALUE'];?></VUpakovke2>
+                        <Ostatok><?=$item['PROPERTY_OSTATOK_VALUE'];?></Ostatok>
+                        <Artikul><?=$item['PROPERTY_ARTICUL_VALUE'];?></Artikul>
+                        <Naimenovanie><?=$item['PROPERTY_NAIMENOVANIE_VALUE'];?></Naimenovanie>
+                        <Foto><?=$item['PREVIEW_PICTURE'];?></Foto>
+                        <CZena1><?=$item['PROPERTY_PRICE_VALUE'];?></CZena1>
+                        <CZena2><?=$item['PRICE_OPT_VALUE'];?></CZena2>
+                        <CZena3><?=$item['PRICE_OPT2_VALUE'];?></CZena3>
+                        <EdIzmereniya><?=$item['PROPERTY_UNITS_VALUE'];?></EdIzmereniya>
+                        <?php
+                        if ($item['Opisanie']) {
+                            ?><Opisanie><?=$item['Opisanie'];?></Opisanie>
+                        <?php }?>
+                    </item>
+                <?php } ?>
+            </items>
+
+            <?php $xmlContent = ob_get_clean();
+
+            $filename = '/tmp/section-' . $keyRowId . '.xml';
+            file_put_contents($_SERVER['DOCUMENT_ROOT'] . $filename, $xmlContent);
+        }
+
+        return $arItems;
     }
 
     public function cacheDate(){
@@ -1012,7 +1109,6 @@ $firstList = '<div id="first-list">
 
 ?>
 
-
 <!doctype html>
 <html>
 <head>
@@ -1037,4 +1133,3 @@ echo $pricePrint->getContentsHTML();
 
 </body>
 </html>
-
