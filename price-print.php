@@ -35,6 +35,7 @@ function compare($x, $y)
 class pricePrint
 {
     public static $arrEmptySections = [];
+    public static $arrSections = [];
 
     private $itemsForXml;
 
@@ -354,13 +355,7 @@ class pricePrint
             usort($sectionElements, 'compare');
             //exit;
 
-            $iCount = 0;
             foreach ($sectionElements as $elementKey => $element) {
-                if ($iCount == 0) {
-                    \Bitrix\Main\Diag\Debug::dumpToFile(['$element' => $element], '', 'log.txt');
-                }
-                $iCount = 1;
-
                 $getElementInfo = CIBlockElement::GetList(Array(), array("PROPERTY_ROWID" => $element['ID'], "IBLOCK_ID" => 1), false, false, array("ID", "NAME", "PREVIEW_PICTURE"));
                 $count = $getElementInfo->SelectedRowsCount(); // количество полученных записей из таблицы
                 $elementInfo = $getElementInfo->GetNext();
@@ -451,8 +446,8 @@ class pricePrint
 
     public function setPriceHTML()
     {
-
         $sections = $this->getSectionsArray();
+
         $sectionsById = $this->getSectionsByIdArray();
         $this->setElementsArray();
 
@@ -468,10 +463,8 @@ class pricePrint
         $rootId = $sections[0]['ID'];
         $rootItemId = false;
         foreach ($sections as $sectionKey => $section) {
-
             $setContents = true;
             $sectionsCounter++;
-
 
             /*
              * Разрыв страницы или след колонка, если не помещается заголовок с первыми строками таблицы
@@ -490,29 +483,29 @@ class pricePrint
                         if (false) {
 
                         } else {
-                            if ($section['DEPTH_LEVEL'] != 1)
+                            if ($section['DEPTH_LEVEL'] != 1) {
                                 $html .= $this->newPageHTML($sections[0], 'новая страница перед заголовоком level=' . $section['DEPTH_LEVEL'] . ' ' . $sections[$sectionKey]['NAME'] . ' nextLevel=' . $sections[$sectionKey + 1]['DEPTH_LEVEL'] . ' ');
+                            }
                         }
-
                     }
-
                 }
-
             }
-
-
 
             /*
              * Вывод заголовка
              */
             if ($section['DEPTH_LEVEL'] == 1) {
-                $this->pageTitle = $section['NAME'];
-                if ($sectionsCounter != 1) {
-                    if ($sectionsCounter != $sectionsNumber) {
-                        $html .= $this->newPageHTML($sections[0], 'новая страница перед заголовоком первого уровня ');
-                        $this->h2Counter = 0;
+                if (!in_array($section['ID'], self::$arrEmptySections)) {
+                    $this->pageTitle = $section['NAME'];
+                    if ($sectionsCounter != 1) {
+                        if ($sectionsCounter != $sectionsNumber) {
+                            $html .= $this->newPageHTML($sections[0], 'новая страница перед заголовоком первого уровня ');
+                            $this->h2Counter = 0;
+                        }
                     }
-                }
+                }/* else {
+                    $setContents = false;
+                }*/
             } else {
                 $elements = $this->getElementsBySections();
                 if (!in_array($section['ID'], self::$arrEmptySections)) {
@@ -521,16 +514,12 @@ class pricePrint
                     $html .= '<!-- $nextHeight="' . $nextHeight . '", $nextHeaderSize="' . $nextHeaderSize . '", $nextRowsSize="' . $nextRowsSize . '" -->';
                     $html .= $this->headerHTML($section);
 
-                } else {
+                }/* else {
                     $setContents = false;
-                }
+                }*/
             }
 
-
-
             //$html .= $this->itemsTable($section);
-
-
 
             /*
              * Вывод элементов
@@ -540,10 +529,6 @@ class pricePrint
             } else {
                 $rootItemId = $section;
             }
-
-
-
-
 
             /*
              * Элементы лежащие в корне раздела второго уровня (без секции)
@@ -561,8 +546,9 @@ class pricePrint
                             if (false) {
 
                             } else {
-                                if ($section['DEPTH_LEVEL'] != 1)
+                                if ($section['DEPTH_LEVEL'] != 1) {
                                     $html .= $this->newPageHTML($sections[0], 'новая страница перед перед элементами в корне второго уровня (без секции)');
+                                }
                             }
 
                         }
@@ -579,12 +565,12 @@ class pricePrint
             /*
              * Формирование массива для содержания
              */
-            if ($setContents)
+            if ($setContents) {
                 $this->setContentsArray($section);
+            }
 
         }
-        //$html .= $this->pageNumberHTML();
-
+        $html .= $this->pageNumberHTML();
 
         $html .= $this->newPageHTML($sections[0], 'закрывется последняя страница', 'last');
 
@@ -662,8 +648,8 @@ class pricePrint
 
     private function pageNumberHTML()
     {
-        //$html = '<div class="pageNumber">' . $this->getPagesCounter() . '</div>';
-        $html = '';
+        $html = '<div class="pageNumber">' . $this->getPagesCounter() . '</div>';
+        //$html = '';
         return $html;
     }
 
@@ -872,7 +858,7 @@ class pricePrint
     private function setContentsArray($section)
     {
         if (!isset($this->contentsArray[$section['ID']]) and $section['DEPTH_LEVEL'] < 3) {
-            $section['PAGE'] = $this->getPagesCounter();
+            $section['PAGE'] = $this->getPagesCounter() + 1;
             $this->contentsArray[$section['ID']] = $section;
         }
     }
@@ -915,6 +901,11 @@ class pricePrint
 
         $sections = $this->getSectionsArray();
 
+        $arrSectionsWithKeys = [];
+        foreach ($sections as $section) {
+            $arrSectionsWithKeys[$section['ID']] = $section;
+        }
+
         $arRezultSections = array_column($sections, 'ID');
 
         $arFilter = [
@@ -929,6 +920,11 @@ class pricePrint
         $arSectionIds = [];
         while ($arSection = $rsSections->GetNext()) {
             $arSectionIds[$arSection['UF_ROWID']] = $arSection['ID'];
+        }
+
+        $arrTempSections = [];
+        foreach ($arrSectionsWithKeys as $key => $sectKeyItem) {
+            $arrTempSections[$arSectionIds[$key]] = $arrSectionsWithKeys[$key];
         }
 
         //Сделаем выборку всех товаров полученных секциях
@@ -965,6 +961,7 @@ class pricePrint
                 'PROPERTY_PRICE_OPT',
                 'PROPERTY_PRICE_OPT2',
                 'PROPERTY_UNITS',
+                'PROPERTY_SORT_IN_PRICE',
                 'IBLOCK_SECTION_ID'
             ]
         );
@@ -975,13 +972,7 @@ class pricePrint
 
         $arrEmptySections = [];
         //Теперь составим xml файлики из полученныех данных
-        //TODO искуственно ограничение на количество товаров
-        $sectArraya = [17304, 17304, 3566, 7532];
         foreach ($arSectionIds as $keyRowId => $sectionItem) {
-            //TODO искуственно ограничение на количество товаров
-  /*          if (!in_array($keyRowId, $sectArraya)) {
-                continue;
-            }*/
 
             ob_start();
 
@@ -999,6 +990,8 @@ class pricePrint
                     if ($item['IBLOCK_SECTION_ID'] != $sectionItem) {
                         continue;
                     }
+
+                    $arrTempSections[$sectionItem]['SORT_IN_PRICE'] = $item['PROPERTY_SORT_IN_PRICE_VALUE'];
                     ?>
 
                     <item>
@@ -1037,6 +1030,7 @@ class pricePrint
         }
 
         self::$arrEmptySections = $arrEmptySections;
+        self::$arrSections = $arrTempSections;
 
         return $arItems;
     }
@@ -1129,7 +1123,6 @@ $firstList = '<div id="first-list">
 <!doctype html>
 <html>
 <head>
-    <title>Прайс-лист</title>
     <!--<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono&subset=latin,cyrillic' rel='stylesheet'
           type='text/css'>-->
     <link href='https://fonts.googleapis.com/css?family=PT+Mono&subset=latin,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
