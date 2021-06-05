@@ -6,3 +6,4 @@
 !/bitrix/php_interface/
 !/bitrix/gadgets/
 local/include/vendor/*
+local/include/vendor/dompdf_cirillic/*

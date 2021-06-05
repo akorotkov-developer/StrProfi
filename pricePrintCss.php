@@ -166,7 +166,7 @@ td.img img {
     width: <?=$sizes['pageBoxWidth']?>;
     margin: auto;
     page-break-after: always;
-    height: <?=$sizes['pageHeight']?>mm;
+    /*height: <?=$sizes['pageHeight']?>mm;*/
     position: relative;
     /* border-bottom: 1mm solid black;
  border-top: 1mm solid black;*/
@@ -374,5 +374,10 @@ tr.tableHeader td {
 }
 .desc {
     display: none;
+}
+@media print {
+    a[href]:after {
+        content: none !important;
+    }
 }
 </style>

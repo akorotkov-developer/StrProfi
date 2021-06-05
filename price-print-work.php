@@ -34,9 +34,6 @@ function compare($x, $y)
 
 class pricePrint
 {
-    public static $arrEmptySections = [];
-    public static $arrSections = [];
-
     private $itemsForXml;
 
     public function getSectionsByIdArray()
@@ -355,7 +352,10 @@ class pricePrint
             usort($sectionElements, 'compare');
             //exit;
 
+
             foreach ($sectionElements as $elementKey => $element) {
+
+
                 $getElementInfo = CIBlockElement::GetList(Array(), array("PROPERTY_ROWID" => $element['ID'], "IBLOCK_ID" => 1), false, false, array("ID", "NAME", "PREVIEW_PICTURE"));
                 $count = $getElementInfo->SelectedRowsCount(); // количество полученных записей из таблицы
                 $elementInfo = $getElementInfo->GetNext();
@@ -446,75 +446,8 @@ class pricePrint
 
     public function setPriceHTML()
     {
+
         $sections = $this->getSectionsArray();
-
-        /*$arrSectionsWithKeys = [];
-        foreach ($sections as $section) {
-            $arrSectionsWithKeys[$section['ID']] = $section;
-        }
-
-        //Возьмем только корневые разделы
-        $arSectMains = [];
-        foreach ($arrSectionsWithKeys as $sectKeyItem) {
-            if ($sectKeyItem['DEPTH_LEVEL'] == 1) {
-                $arSectMains[$sectKeyItem['ID']] = $sectKeyItem;
-            }
-        }
-
-        //Найдем ключи SORT_IN_PRICE для каждой секции
-        $arrKeysRowId = array_column($arSectMains, 'ID');
-        $arFilter = [
-            'ACTIVE' => 'Y',
-            'IBLOCK_ID' => 1,
-            'UF_ROWID' => $arrKeysRowId
-        ];
-        $arSelect = ['IBLOCK_ID', 'ID', 'NAME', 'DEPTH_LEVEL', 'IBLOCK_SECTION_ID', 'PICTURE', 'UF_ROWID'];
-        $arOrder = ['DEPTH_LEVEL' => 'ASC', 'SORT' => 'ASC'];
-        $rsSections = CIBlockSection::GetList($arOrder, $arFilter, false, $arSelect);
-
-        $arSectionIds = [];
-        while ($arSection = $rsSections->GetNext()) {
-            $arSectionIds[$arSection['UF_ROWID']] = $arSection['ID'];
-            $arSectionsKeys[$arSection['ID']] = $arSection['UF_ROWID'];
-        }
-
-        //Поочереди сделаем запросы в базу
-        foreach ($arSectionIds as $sectId) {
-            $arFilter = [
-                'IBLOCK_ID' => 1,
-                'PROPERTY_SHOW_IN_PRICE' => [1],
-                'SECTION_ID' => $sectId,
-                'INCLUDE_SUBSECTIONS' => 'Y'
-            ];
-            $dbRes = CIBlockElement::GetList(
-                ['SORT"=>"ASC'],
-                $arFilter,
-                false,
-                false,
-                [
-                    'ID',
-                    'NAME',
-                    'PROPERTY_SORT_IN_PRICE',
-                    'IBLOCK_SECTION_ID'
-                ]
-            );
-            while ($arRez = $dbRes->Fetch())
-            {
-                if ($arRez['PROPERTY_SORT_IN_PRICE_VALUE']) {
-                    $arSectionsSortInPriceValues[$sectId] = $arRez['PROPERTY_SORT_IN_PRICE_VALUE'];
-                    break;
-                }
-            }
-        }
-
-        foreach ($arSectionsSortInPriceValues as $key => $sectItem) {
-            $arrSectionsWithKeys[$arSectionsKeys[$key]]['SORT_IN_PRICE'] = $sectItem;
-        }
-
-        usort($arrSectionsWithKeys, function ($a, $b) {
-            return $a['SORT_IN_PRICE'] < $b['SORT_IN_PRICE'] ? -1 : 1;
-        });*/
-
         $sectionsById = $this->getSectionsByIdArray();
         $this->setElementsArray();
 
@@ -529,10 +462,11 @@ class pricePrint
         //exit;
         $rootId = $sections[0]['ID'];
         $rootItemId = false;
-
         foreach ($sections as $sectionKey => $section) {
+
             $setContents = true;
             $sectionsCounter++;
+
 
             /*
              * Разрыв страницы или след колонка, если не помещается заголовок с первыми строками таблицы
@@ -551,43 +485,46 @@ class pricePrint
                         if (false) {
 
                         } else {
-                            if ($section['DEPTH_LEVEL'] != 1) {
+                            if ($section['DEPTH_LEVEL'] != 1)
                                 $html .= $this->newPageHTML($sections[0], 'новая страница перед заголовоком level=' . $section['DEPTH_LEVEL'] . ' ' . $sections[$sectionKey]['NAME'] . ' nextLevel=' . $sections[$sectionKey + 1]['DEPTH_LEVEL'] . ' ');
-                            }
                         }
+
                     }
+
                 }
+
             }
+
+
 
             /*
              * Вывод заголовка
              */
             if ($section['DEPTH_LEVEL'] == 1) {
                 $this->pageTitle = $section['NAME'];
-                if (!in_array($section['ID'], self::$arrEmptySections)) {
-                    if ($sectionsCounter != 1) {
-                        if ($sectionsCounter != $sectionsNumber) {
-                            $html .= $this->newPageHTML($sections[0], 'новая страница перед заголовоком первого уровня ');
-                            $this->h2Counter = 0;
-                        }
+                if ($sectionsCounter != 1) {
+                    if ($sectionsCounter != $sectionsNumber) {
+                        $html .= $this->newPageHTML($sections[0], 'новая страница перед заголовоком первого уровня ');
+                        $this->h2Counter = 0;
                     }
-                }/* else {
-                    $setContents = false;
-                }*/
+                }
             } else {
                 $elements = $this->getElementsBySections();
-                if (!in_array($section['ID'], self::$arrEmptySections)) {
                 //if (!empty($elements[$section['ID']])) {
-                /*if (true) {*/
+                if (true) {
                     $html .= '<!-- $nextHeight="' . $nextHeight . '", $nextHeaderSize="' . $nextHeaderSize . '", $nextRowsSize="' . $nextRowsSize . '" -->';
                     $html .= $this->headerHTML($section);
 
-                }/* else {
+                } else {
                     $setContents = false;
-                }*/
+                }
             }
 
+
+
             //$html .= $this->itemsTable($section);
+
+
 
             /*
              * Вывод элементов
@@ -597,6 +534,10 @@ class pricePrint
             } else {
                 $rootItemId = $section;
             }
+
+
+
+
 
             /*
              * Элементы лежащие в корне раздела второго уровня (без секции)
@@ -614,9 +555,8 @@ class pricePrint
                             if (false) {
 
                             } else {
-                                if ($section['DEPTH_LEVEL'] != 1) {
+                                if ($section['DEPTH_LEVEL'] != 1)
                                     $html .= $this->newPageHTML($sections[0], 'новая страница перед перед элементами в корне второго уровня (без секции)');
-                                }
                             }
 
                         }
@@ -633,12 +573,12 @@ class pricePrint
             /*
              * Формирование массива для содержания
              */
-            if ($setContents) {
+            if ($setContents)
                 $this->setContentsArray($section);
-            }
 
         }
-        $html .= $this->pageNumberHTML();
+        //$html .= $this->pageNumberHTML();
+
 
         $html .= $this->newPageHTML($sections[0], 'закрывется последняя страница', 'last');
 
@@ -717,7 +657,6 @@ class pricePrint
     private function pageNumberHTML()
     {
         $html = '<div class="pageNumber">' . $this->getPagesCounter() . '</div>';
-        //$html = '';
         return $html;
     }
 
@@ -926,7 +865,7 @@ class pricePrint
     private function setContentsArray($section)
     {
         if (!isset($this->contentsArray[$section['ID']]) and $section['DEPTH_LEVEL'] < 3) {
-            $section['PAGE'] = $this->getPagesCounter() + 1;
+            $section['PAGE'] = $this->getPagesCounter();
             $this->contentsArray[$section['ID']] = $section;
         }
     }
@@ -969,11 +908,6 @@ class pricePrint
 
         $sections = $this->getSectionsArray();
 
-        $arrSectionsWithKeys = [];
-        foreach ($sections as $section) {
-            $arrSectionsWithKeys[$section['ID']] = $section;
-        }
-
         $arRezultSections = array_column($sections, 'ID');
 
         $arFilter = [
@@ -988,11 +922,6 @@ class pricePrint
         $arSectionIds = [];
         while ($arSection = $rsSections->GetNext()) {
             $arSectionIds[$arSection['UF_ROWID']] = $arSection['ID'];
-        }
-
-        $arrTempSections = [];
-        foreach ($arrSectionsWithKeys as $key => $sectKeyItem) {
-            $arrTempSections[$arSectionIds[$key]] = $arrSectionsWithKeys[$key];
         }
 
         //Сделаем выборку всех товаров полученных секциях
@@ -1026,22 +955,25 @@ class pricePrint
                 'PROPERTY_NAIMENOVANIE',
                 'PREVIEW_PICTURE',
                 'PROPERTY_PRICE',
-                'PROPERTY_PRICE_OPT',
-                'PROPERTY_PRICE_OPT2',
+                'PRICE_OPT',
+                'PRICE_OPT2',
                 'PROPERTY_UNITS',
-                'PROPERTY_SORT_IN_PRICE',
                 'IBLOCK_SECTION_ID'
             ]
         );
         while($arRez = $dbRes->Fetch())
         {
             $arItems[] = $arRez;
-            $arSectionsItems[$arRez['IBLOCK_SECTION_ID']] = $arRez['PROPERTY_SORT_IN_PRICE_VALUE'];
         }
 
-        $arrEmptySections = [];
         //Теперь составим xml файлики из полученныех данных
+        //TODO искуственно ограничение на количество товаров
+        $sectArraya = [17304, 17304, 3566, 7532];
         foreach ($arSectionIds as $keyRowId => $sectionItem) {
+            //TODO искуственно ограничение на количество товаров
+  /*          if (!in_array($keyRowId, $sectArraya)) {
+                continue;
+            }*/
 
             ob_start();
 
@@ -1050,7 +982,6 @@ class pricePrint
 
             <items>
                 <?php
-                $countItems = 0;
                 foreach ($arItems as $item) {
                     if (!$item['PROPERTY_ARTICUL_VALUE']) {
                         continue;
@@ -1059,8 +990,6 @@ class pricePrint
                     if ($item['IBLOCK_SECTION_ID'] != $sectionItem) {
                         continue;
                     }
-
-                    /*$arrTempSections[$sectionItem]['SORT_IN_PRICE'] = $item['PROPERTY_SORT_IN_PRICE_VALUE'];*/
                     ?>
 
                     <item>
@@ -1075,44 +1004,22 @@ class pricePrint
                         <Naimenovanie><?=$item['PROPERTY_NAIMENOVANIE_VALUE'];?></Naimenovanie>
                         <Foto><?=$item['PREVIEW_PICTURE'];?></Foto>
                         <CZena1><?=$item['PROPERTY_PRICE_VALUE'];?></CZena1>
-                        <CZena2><?=$item['PROPERTY_PRICE_OPT_VALUE'];?></CZena2>
-                        <CZena3><?=$item['PROPERTY_PRICE_OPT2_VALUE'];?></CZena3>
+                        <CZena2><?=$item['PRICE_OPT_VALUE'];?></CZena2>
+                        <CZena3><?=$item['PRICE_OPT2_VALUE'];?></CZena3>
                         <EdIzmereniya><?=$item['PROPERTY_UNITS_VALUE'];?></EdIzmereniya>
                         <?php
                         if ($item['Opisanie']) {
                             ?><Opisanie><?=$item['Opisanie'];?></Opisanie>
                         <?php }?>
                     </item>
-                <?php
-                    $countItems++;
-                } ?>
+                <?php } ?>
             </items>
 
             <?php $xmlContent = ob_get_clean();
 
-            if ($countItems > 0) {
-                $filename = '/tmp/section-' . $keyRowId . '.xml';
-                file_put_contents($_SERVER['DOCUMENT_ROOT'] . $filename, $xmlContent);
-            } else {
-                $arrEmptySections[] = $keyRowId;
-            }
+            $filename = '/tmp/section-' . $keyRowId . '.xml';
+            file_put_contents($_SERVER['DOCUMENT_ROOT'] . $filename, $xmlContent);
         }
-
-        //Опрделеить секции без SORT_IN_PRICE
-/*        foreach ($arSectionsItems as $key => $sectItem) {
-            $arrTempSections[$key]['SORT_IN_PRICE'] = $sectItem;
-        }
-
-
-        $arrNoSortInPriceSection = [];
-        foreach ($arrTempSections as $sectItem) {
-            if (!$sectItem['SORT_IN_PRICE']) {
-                $arrNoSortInPriceSection[] = $sectItem['ID'];
-            }
-        }*/
-
-        self::$arrEmptySections = $arrEmptySections;
-        self::$arrSections = $arrTempSections;
 
         return $arItems;
     }
@@ -1205,6 +1112,7 @@ $firstList = '<div id="first-list">
 <!doctype html>
 <html>
 <head>
+    <title>Прайс-лист</title>
     <!--<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono&subset=latin,cyrillic' rel='stylesheet'
           type='text/css'>-->
     <link href='https://fonts.googleapis.com/css?family=PT+Mono&subset=latin,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
