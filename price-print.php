@@ -34,6 +34,8 @@ function compare($x, $y)
 
 class pricePrint
 {
+    public static $arrEmptySections = [];
+
     private $itemsForXml;
 
     public function getSectionsByIdArray()
@@ -510,8 +512,9 @@ class pricePrint
                 }
             } else {
                 $elements = $this->getElementsBySections();
+                if (!in_array($section['ID'], self::$arrEmptySections)) {
                 //if (!empty($elements[$section['ID']])) {
-                if (true) {
+                /*if (true) {*/
                     $html .= '<!-- $nextHeight="' . $nextHeight . '", $nextHeaderSize="' . $nextHeaderSize . '", $nextRowsSize="' . $nextRowsSize . '" -->';
                     $html .= $this->headerHTML($section);
 
@@ -656,7 +659,8 @@ class pricePrint
 
     private function pageNumberHTML()
     {
-        $html = '<div class="pageNumber">' . $this->getPagesCounter() . '</div>';
+        //$html = '<div class="pageNumber">' . $this->getPagesCounter() . '</div>';
+        $html = '';
         return $html;
     }
 
@@ -724,8 +728,8 @@ class pricePrint
             $size = $this->getHeaderSize(1, $this->pageTitle);
             $html .= '<div data-this-height="' . $size . '" data-height="' . $this->getHeightCounter() . '" class="h1Box">';
             $html .= '<div class="tblBox">';
-            $html .= '<img class="bg" src="/img/white.gif" alt="" style="border: solid 1px #ff7920;">';
-            $html .= '<div class="tbl">';
+           /* $html .= '<img class="bg" src="/img/white.gif" alt="" style="border: solid 1px #ff7920;">';*/
+            $html .= '<div class="tbl" style="border: solid 1px #ff7920; page-break-before: always;">';
             $html .= '<div class="tr">';
             $html .= '<div class="td header"><h1 data-level="">' . $this->pageTitle . '</h1></div>';
             $html .= '<div class="td w1 logo"><img class="logo" src="/img/logo.png" alt=""></div>';
@@ -966,14 +970,15 @@ class pricePrint
             $arItems[] = $arRez;
         }
 
+        $arrEmptySections = [];
         //Теперь составим xml файлики из полученныех данных
         //TODO искуственно ограничение на количество товаров
         $sectArraya = [17304, 17304, 3566, 7532];
         foreach ($arSectionIds as $keyRowId => $sectionItem) {
             //TODO искуственно ограничение на количество товаров
-            if (!in_array($keyRowId, $sectArraya)) {
+  /*          if (!in_array($keyRowId, $sectArraya)) {
                 continue;
-            }
+            }*/
 
             ob_start();
 
@@ -982,6 +987,7 @@ class pricePrint
 
             <items>
                 <?php
+                $countItems = 0;
                 foreach ($arItems as $item) {
                     if (!$item['PROPERTY_ARTICUL_VALUE']) {
                         continue;
@@ -1012,14 +1018,23 @@ class pricePrint
                             ?><Opisanie><?=$item['Opisanie'];?></Opisanie>
                         <?php }?>
                     </item>
-                <?php } ?>
+                <?php
+                    $countItems++;
+                } ?>
             </items>
 
             <?php $xmlContent = ob_get_clean();
 
-            $filename = '/tmp/section-' . $keyRowId . '.xml';
-            file_put_contents($_SERVER['DOCUMENT_ROOT'] . $filename, $xmlContent);
+            if ($countItems > 0) {
+                $filename = '/tmp/section-' . $keyRowId . '.xml';
+                file_put_contents($_SERVER['DOCUMENT_ROOT'] . $filename, $xmlContent);
+            } else {
+                $arrEmptySections[] = $keyRowId;
+            }
         }
+
+        self::$arrEmptySections = $arrEmptySections;
+        \Bitrix\Main\Diag\Debug::dumpToFile(['$arrEmptySections' => $arrEmptySections], '', 'log.txt');
 
         return $arItems;
     }
@@ -1064,7 +1079,7 @@ $sizes = array(
     'pageBoxPaddingBottom' => 5,
     'pageHeight' => 260,
     'pageBreak' => 273.5,
-    'bodyFontSize' => '7pt',
+    'bodyFontSize' => '6pt',
     'pageNumberLineHeight' => 5,
     'sectionBoxMarginBottom' => 5,
     'tdBorderBottom' => 0.5,
