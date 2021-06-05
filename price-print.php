@@ -354,9 +354,12 @@ class pricePrint
             usort($sectionElements, 'compare');
             //exit;
 
-
+            $iCount = 0;
             foreach ($sectionElements as $elementKey => $element) {
-
+                if ($iCount == 0) {
+                    \Bitrix\Main\Diag\Debug::dumpToFile(['$element' => $element], '', 'log.txt');
+                }
+                $iCount = 1;
 
                 $getElementInfo = CIBlockElement::GetList(Array(), array("PROPERTY_ROWID" => $element['ID'], "IBLOCK_ID" => 1), false, false, array("ID", "NAME", "PREVIEW_PICTURE"));
                 $count = $getElementInfo->SelectedRowsCount(); // количество полученных записей из таблицы
@@ -959,8 +962,8 @@ class pricePrint
                 'PROPERTY_NAIMENOVANIE',
                 'PREVIEW_PICTURE',
                 'PROPERTY_PRICE',
-                'PRICE_OPT',
-                'PRICE_OPT2',
+                'PROPERTY_PRICE_OPT',
+                'PROPERTY_PRICE_OPT2',
                 'PROPERTY_UNITS',
                 'IBLOCK_SECTION_ID'
             ]
@@ -1010,8 +1013,8 @@ class pricePrint
                         <Naimenovanie><?=$item['PROPERTY_NAIMENOVANIE_VALUE'];?></Naimenovanie>
                         <Foto><?=$item['PREVIEW_PICTURE'];?></Foto>
                         <CZena1><?=$item['PROPERTY_PRICE_VALUE'];?></CZena1>
-                        <CZena2><?=$item['PRICE_OPT_VALUE'];?></CZena2>
-                        <CZena3><?=$item['PRICE_OPT2_VALUE'];?></CZena3>
+                        <CZena2><?=$item['PROPERTY_PRICE_OPT_VALUE'];?></CZena2>
+                        <CZena3><?=$item['PROPERTY_PRICE_OPT2_VALUE'];?></CZena3>
                         <EdIzmereniya><?=$item['PROPERTY_UNITS_VALUE'];?></EdIzmereniya>
                         <?php
                         if ($item['Opisanie']) {
@@ -1034,7 +1037,6 @@ class pricePrint
         }
 
         self::$arrEmptySections = $arrEmptySections;
-        \Bitrix\Main\Diag\Debug::dumpToFile(['$arrEmptySections' => $arrEmptySections], '', 'log.txt');
 
         return $arItems;
     }
