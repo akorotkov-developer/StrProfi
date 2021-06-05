@@ -466,7 +466,8 @@ function addUpdateElement($item, $siteCatID)
 			"NAIMENOVANIE" => $item['Naimenovanie'],
 			"NomenklaturaGeog" => $item['NomenklaturaGeog'],
 			"V_REZERVE" => $item['VRezerve'],
-            "SHOW_IN_PRICE" => ($item['show_in_price'] > 0) ? 1: 0
+            "SHOW_IN_PRICE" => ($item['show_in_price'] > 0) ? 1: 0,
+            "SORT_IN_PRICE" => $item['show_in_price']
 		);
 		$arUpdate = Array(
 			"NAME" => trim(strval($item['Svertka'])),
@@ -587,7 +588,8 @@ function addUpdateElement($item, $siteCatID)
 				"UPAKOVKA2" => $item['VUpakovke2'],
 				"OSTATOK" => $item['Ostatok'],
 				"V_REZERVE" => $item['VRezerve'],
-                "SHOW_IN_PRICE" => ($item['show_in_price'] > 0) ? 1: 0
+                "SHOW_IN_PRICE" => ($item['show_in_price'] > 0) ? 1: 0,
+                "SORT_IN_PRICE" => $item['show_in_price']
 			),
 		);
 
