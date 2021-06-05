@@ -462,6 +462,8 @@ class pricePrint
         //exit;
         $rootId = $sections[0]['ID'];
         $rootItemId = false;
+
+        \Bitrix\Main\Diag\Debug::dumpToFile(['$sections' => $sections], '', 'log.txt');
         foreach ($sections as $sectionKey => $section) {
             $setContents = true;
             $sectionsCounter++;
@@ -495,8 +497,8 @@ class pricePrint
              * Вывод заголовка
              */
             if ($section['DEPTH_LEVEL'] == 1) {
+                $this->pageTitle = $section['NAME'];
                 if (!in_array($section['ID'], self::$arrEmptySections)) {
-                    $this->pageTitle = $section['NAME'];
                     if ($sectionsCounter != 1) {
                         if ($sectionsCounter != $sectionsNumber) {
                             $html .= $this->newPageHTML($sections[0], 'новая страница перед заголовоком первого уровня ');
