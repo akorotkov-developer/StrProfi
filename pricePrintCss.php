@@ -176,7 +176,7 @@ td.img img {
 .pageNumber {
     position: absolute;
     line-height: <?=$sizes['pageNumberLineHeight']?>mm;
-    bottom: 0;
+    bottom: -20px;
 }
 
 table {
