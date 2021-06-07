@@ -166,7 +166,7 @@ td.img img {
     width: <?=$sizes['pageBoxWidth']?>;
     margin: auto;
     page-break-after: always;
-    /*height: <?=$sizes['pageHeight']?>mm;*/
+    height: <?=$sizes['pageHeight']?>mm;
     position: relative;
     /* border-bottom: 1mm solid black;
  border-top: 1mm solid black;*/
@@ -378,6 +378,18 @@ tr.tableHeader td {
 @media print {
     a[href]:after {
         content: none !important;
+    }
+
+    .pagebreak:before {
+        content: counter(page);
+        counter-increment: page;
+        text-align: center;
+        font: bold 15px/15px Tahoma;
+        margin: 10px 0 0 0;
+        border-top: 1px solid #333;
+        display: block;
+        width: 100%;
+        padding: 5px 0 0 0;
     }
 }
 </style>
