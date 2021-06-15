@@ -1,6 +1,4 @@
 <?php
-require(__DIR__ . "/../include/vendor/autoload.php");
-
 CJSCore::Init(array("jquery"));
 
 /**Подключение PHP mailer*/

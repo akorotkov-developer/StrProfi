@@ -1,6 +1,8 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 
+require(__DIR__ . "/local/include/vendor/autoload.php");
+
 use Spatie\ArrayToXml\ArrayToXml;
 
 CModule::IncludeModule("iblock");
@@ -356,11 +358,11 @@ class pricePrint
             $elementsCounter = 0;
 
 
-            usort($sectionElements, 'compare');
+           /* usort($sectionElements, 'compare');*/
             //exit;
 
             foreach ($sectionElements as $elementKey => $element) {
-                $getElementInfo = CIBlockElement::GetList(Array(), array("PROPERTY_ROWID" => $element['ID'], "IBLOCK_ID" => 1), false, false, array("ID", "NAME", "PREVIEW_PICTURE"));
+                $getElementInfo = CIBlockElement::GetList(Array('PROPERTY_NAIMENOVANIE' => 'ASC'), array("PROPERTY_ROWID" => $element['ID'], "IBLOCK_ID" => 1), false, false, array("ID", "NAME", "PREVIEW_PICTURE"));
                 $count = $getElementInfo->SelectedRowsCount(); // количество полученных записей из таблицы
                 $elementInfo = $getElementInfo->GetNext();
 
@@ -958,7 +960,7 @@ class pricePrint
                 'INCLUDE_SUBSECTIONS' => 'Y'
             ];
             $dbRes = CIBlockElement::GetList(
-                ['SORT"=>"ASC'],
+                ['PROPERTY_NAIMENOVANIE' => 'ASC'],
                 $arFilter,
                 false,
                 false,
@@ -1065,7 +1067,7 @@ class pricePrint
             /*'INCLUDE_SUBSECTIONS' => 'Y'*/
         ];
         $dbRes = CIBlockElement::GetList(
-            ['SORT"=>"ASC'],
+            ['PROPERTY_NAIMENOVANIE' => 'ASC'],
             $arFilter,
             false,
             false,
@@ -1118,6 +1120,10 @@ class pricePrint
 
                     if ($item['IBLOCK_SECTION_ID'] != $sectionItem) {
                         continue;
+                    }
+
+                    if ($sectionItem == 4631) {
+                        \Bitrix\Main\Diag\Debug::dumpToFile(['$item' => $item], '', 'log.txt');
                     }
 
                     /*$arrTempSections[$sectionItem]['SORT_IN_PRICE'] = $item['PROPERTY_SORT_IN_PRICE_VALUE'];*/
@@ -1257,7 +1263,28 @@ $firstList = '<div id="first-list">
 </div>
 
 </div>
-<div class="pageBreakAfter"></div>';
+<div class="pageBreakAfter"></div>
+<div style="    page-break-after: always;
+    height: 260mm;">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+<div class="pageBreakAfter"></div>
+';
 
 
 ?>
