@@ -1097,6 +1097,10 @@ class pricePrint
         );
         while($arRez = $dbRes->Fetch())
         {
+            if ($arRez['PROPERTY_ROWID_VALUE'] == 3937) {
+                \Bitrix\Main\Diag\Debug::dumpToFile(['$arRez' => $arRez], '', 'log.txt');
+            }
+
             $arItems[] = $arRez;
             $arSectionsItems[$arRez['IBLOCK_SECTION_ID']] = $arRez['PROPERTY_SORT_IN_PRICE_VALUE'];
         }
@@ -1121,12 +1125,6 @@ class pricePrint
                     if ($item['IBLOCK_SECTION_ID'] != $sectionItem) {
                         continue;
                     }
-
-                    if ($sectionItem == 4631) {
-                        \Bitrix\Main\Diag\Debug::dumpToFile(['$item' => $item], '', 'log.txt');
-                    }
-
-                    /*$arrTempSections[$sectionItem]['SORT_IN_PRICE'] = $item['PROPERTY_SORT_IN_PRICE_VALUE'];*/
                     ?>
 
                     <item>
