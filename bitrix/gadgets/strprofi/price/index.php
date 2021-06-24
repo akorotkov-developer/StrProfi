@@ -18,18 +18,21 @@
 
 
 <p><button class="download">Скачать прайс-лист</button></p>
-<p><button class="clear">Очистить кэш</button></p>
 
 
 <script type="text/javascript">
+    $('.download').click(function() {
+        $.ajax({
+            url: "/bitrix/gadgets/strprofi/price/clear_cache.php",
+            success: function(data){
+            }
+        });
 
+        function openPrintWindow() {
+            window.open("/price-print.php", '_blank');
+        }
 
-
-
-    $('.download').click(function(){
-        //if ($(this).is('.generate')) return false;
-        window.open("/price-print.php", '_blank');
-
+        setTimeout(openPrintWindow, 1000);
     })
 
     $('.clear').click(function (e) {
