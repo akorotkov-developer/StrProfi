@@ -1085,3 +1085,6 @@ td .buy_helper_holder{
 	font-style: italic;
 	font-size: 20px;
 }
+#calc_result {
+    font-size: 18px;font-weight: bold;
+}
