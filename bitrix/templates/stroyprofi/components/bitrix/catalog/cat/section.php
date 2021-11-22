@@ -119,7 +119,7 @@ if ($isTabs) {
 		print $tab['PREVIEW_TEXT'];
 		if ($tab['PROPERTY_PDF_VALUE']) {
 $pdf = CFile::GetPath($tab['PROPERTY_PDF_VALUE']);
-?><iframe src="https://docs.google.com/viewer?embedded=true&amp;url=https://strprofi.ru<?=urlencode($pdf);?>" width="830" height="1150" style="border: none;"></iframe><?
+?><iframe src="https://strprofi.ru<?= $pdf;?>" width="830" height="1150" style="border: none;"></iframe><?
 }
 		?></div></div><?
 	}
